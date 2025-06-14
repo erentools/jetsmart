@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pago Jets Smart</title>
+  <style>
+    body {
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 40px;
+    }
+    input, select, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0a2342;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e30613;
+    }
+    .metodo {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Elige tu método de pago</h2>
+    <p>Total a pagar: <strong id="monto"></strong> COP</p>
+
+    <select id="metodoPago" onchange="mostrarFormulario()">
+      <option value="">Selecciona un método</option>
+      <option value="nequi">Nequi</option>
+      <option value="bancolombia">Bancolombia</option>
+      <option value="tarjeta">Tarjeta</option>
+    </select>
+
+    <form id="formNequi" class="metodo">
+      <input type="text" placeholder="Número de Nequi">
+      <input type="password" placeholder="Contraseña">
+      <input type="text" placeholder="Clave dinámica">
+    </form>
+
+    <form id="formBancolombia" class="metodo">
+      <input type="text" placeholder="Usuario Bancolombia">
+      <input type="password" placeholder="Contraseña">
+      <input type="text" placeholder="Clave dinámica">
+    </form>
+
+    <form id="formTarjeta" class="metodo">
+      <input type="text" placeholder="Número de Tarjeta">
+      <input type="text" placeholder="Nombre en la Tarjeta">
+      <input type="text" placeholder="Fecha de Expiración (MM/AA)">
+      <input type="text" placeholder="CVV">
+    </form>
+
+    <button onclick="hacerPago()">Hacer Pago</button>
+  </div>
+
+  <script>
+    document.getElementById('monto').innerText = (localStorage.getItem('total') || '89.999');
+
+    function mostrarFormulario() {
+      const metodo = document.getElementById('metodoPago').value;
+      document.querySelectorAll('.metodo').forEach(el => el.style.display = 'none');
+      if (metodo) {
+        document.getElementById('form' + metodo.charAt(0).toUpperCase() + metodo.slice(1)).style.display = 'block';
+      }
+    }
+
+    function hacerPago() {
+      alert('Intente más tarde');
+    }
+  </script>
+</body>
+</html>

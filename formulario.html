@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario de Pasajeros</title>
+  <style>
+    body {
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background-color: rgba(255,255,255,0.95);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 40px;
+    }
+    input, button {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0a2342;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e30613;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Datos de los Pasajeros</h2>
+    <form id="formPasajeros"></form>
+    <button onclick="irPago()">Pagar Tickets</button>
+  </div>
+
+  <script>
+    const pasajeros = parseInt(localStorage.getItem('pasajeros')) || 1;
+    const total = parseInt(localStorage.getItem('total')) || 89999;
+
+    const form = document.getElementById('formPasajeros');
+    for (let i = 1; i <= pasajeros; i++) {
+      form.innerHTML += `
+        <h3>Pasajero ${i}</h3>
+        <input type="text" placeholder="Nombre completo" required>
+        <input type="text" placeholder="Identificación" required>
+        <input type="tel" placeholder="Número de teléfono" required>
+        <input type="email" placeholder="Correo electrónico" required>
+        <input type="text" placeholder="Contacto de emergencia" required>
+        <input type="text" placeholder="Nombre del contacto de emergencia" required>
+      `;
+    }
+
+    function irPago() {
+      window.location.href = 'pago.html';
+    }
+  </script>
+</body>
+</html>

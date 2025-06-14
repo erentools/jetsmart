@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jets Smart - Reserva tu Vuelo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-image: url('fondo.jpg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #0a2342;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      margin-top: 40px;
+      border-radius: 10px;
+    }
+    h1, label {
+      text-align: center;
+    }
+    input, select, button, datalist {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0a2342;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #e30613;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Jets Smart</h1>
+    <form id="formVuelo">
+      <label for="origen">Ciudad de Origen:</label>
+      <input list="ciudades" id="origen" required>
+      <label for="destino">Ciudad de Destino:</label>
+      <input list="ciudades" id="destino" required>
+      <datalist id="ciudades">
+        <option value="Bogotá, Cundinamarca">
+        <option value="Medellín, Antioquia">
+        <option value="Cali, Valle del Cauca">
+        <option value="Barranquilla, Atlántico">
+        <option value="Cartagena, Bolívar">
+        <option value="Bucaramanga, Santander">
+        <option value="Pereira, Risaralda">
+        <option value="Manizales, Caldas">
+        <option value="Santa Marta, Magdalena">
+        <option value="Cúcuta, Norte de Santander">
+      </datalist>
+
+      <label for="tipo">Tipo de Vuelo:</label>
+      <select id="tipo" required>
+        <option value="ida">Solo ida</option>
+        <option value="idavuelta">Ida y vuelta</option>
+      </select>
+
+      <label for="fechaIda">Fecha de Ida:</label>
+      <input type="date" id="fechaIda" required>
+
+      <div id="regresoDiv" style="display: none;">
+        <label for="fechaRegreso">Fecha de Regreso:</label>
+        <input type="date" id="fechaRegreso">
+      </div>
+
+      <label for="pasajeros">Número de Pasajeros:</label>
+      <input type="number" id="pasajeros" min="1" required>
+
+      <button type="button" onclick="buscarOfertas()">Buscar Ofertas</button>
+    </form>
+
+    <div id="ofertas"></div>
+  </div>
+
+  <script>
+    document.getElementById('tipo').addEventListener('change', function () {
+      document.getElementById('regresoDiv').style.display = this.value === 'idavuelta' ? 'block' : 'none';
+    });
+
+    function buscarOfertas() {
+      const pasajeros = parseInt(document.getElementById('pasajeros').value);
+      const precioBase = 89999;
+      const total = precioBase * pasajeros;
+
+      let ofertasHTML = `<h2>Ofertas Disponibles</h2>`;
+      ['08:00 AM', '12:00 PM', '04:00 PM'].forEach(hora => {
+        ofertasHTML += `
+          <div style='margin:10px 0; padding:10px; border:1px solid #ccc; border-radius:5px;'>
+            Vuelo a las <strong>${hora}</strong> - Total: <strong>$${total.toLocaleString()} COP</strong><br>
+            <button onclick="seleccionarVuelo(${pasajeros}, ${total})">Seleccionar este vuelo</button>
+          </div>`;
+      });
+
+      document.getElementById('ofertas').innerHTML = ofertasHTML;
+    }
+
+    function seleccionarVuelo(pasajeros, total) {
+      localStorage.setItem('pasajeros', pasajeros);
+      localStorage.setItem('total', total);
+      window.location.href = 'formulario.html';
+    }
+  </script>
+</body>
+</html>

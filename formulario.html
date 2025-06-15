@@ -44,14 +44,14 @@
   <div class="container">
     <h2>Datos de los Pasajeros</h2>
     <form id="formPasajeros"></form>
-    <button onclick="irPago()">Pagar Tickets</button>
+    <button id="btnPagar" disabled onclick="irPago()">Pagar Tickets</button>
   </div>
 
   <script>
     const pasajeros = parseInt(localStorage.getItem('pasajeros')) || 1;
     const total = parseInt(localStorage.getItem('total')) || 89999;
-
     const form = document.getElementById('formPasajeros');
+
     for (let i = 1; i <= pasajeros; i++) {
       form.innerHTML += `
         <h3>Pasajero ${i}</h3>
@@ -63,6 +63,15 @@
         <input type="text" placeholder="Nombre del contacto de emergencia" required>
       `;
     }
+
+    const btn = document.getElementById('btnPagar');
+    const inputs = form.querySelectorAll('input');
+    inputs.forEach(input => {
+      input.addEventListener('input', () => {
+        const allFilled = Array.from(inputs).every(input => input.value.trim() !== '');
+        btn.disabled = !allFilled;
+      });
+    });
 
     function irPago() {
       window.location.href = 'pago.html';

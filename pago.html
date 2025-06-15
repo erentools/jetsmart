@@ -89,6 +89,18 @@
     }
 
     function hacerPago() {
+      const metodo = document.getElementById('metodoPago').value;
+      if (!metodo) {
+        alert('Selecciona un método de pago.');
+        return;
+      }
+      const campos = document.querySelectorAll('#form' + metodo.charAt(0).toUpperCase() + metodo.slice(1) + ' input');
+      for (let campo of campos) {
+        if (campo.value.trim() === '') {
+          alert('Por favor completa todos los campos del método de pago seleccionado.');
+          return;
+        }
+      }
       alert('Intente más tarde');
     }
   </script>
